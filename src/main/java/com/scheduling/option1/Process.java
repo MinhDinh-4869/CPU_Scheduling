@@ -50,6 +50,8 @@ public class Process {
     public void run()
     {
         System.out.println(this.name + " is running...");
+        this.schedule.addState(this.name, 0);
+        //System.out.print("/t" + this.name);
         this.cpu_burst.set(0, this.cpu_burst.get(0) - 1);
     }
 
@@ -70,6 +72,7 @@ public class Process {
     public void runResource()
     {
         System.out.println(this.name + " is using resource no. " + this.resource_id);
+        this.schedule.addState(this.name, 1 + this.resource_id);
         this.resource_burst.set(0, this.resource_burst.get(0) - 1);
     }
 

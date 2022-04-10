@@ -1,6 +1,8 @@
 package com.scheduling.option1;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class Schedule {
@@ -9,17 +11,37 @@ public abstract class Schedule {
     //set the number of resources to be 3
      protected List<List<Process>> resourceQueue = new ArrayList<>(3);
      protected List<Process> waitQueue = new ArrayList<>();
+     protected List<List<String>> g_chart = new ArrayList<>(4);
+     protected List<Integer> time_stamp = new ArrayList<>();
+
      public Schedule()
      {
-         for(int i= 0; i< 3; i++)
+         for(int i= 0; i< 4; i++)
          {
-             this.resourceQueue.add(new ArrayList<>());
+             if (i < 3){
+                 this.resourceQueue.add(new ArrayList<>());
+             }
+             this.g_chart.add(new ArrayList<>());
          }
      }
 
     void add(Process p)
     {
         this.waitQueue.add(p);
+    }
+
+    void initState()
+    {
+        this.time_stamp.add(this.time);
+        for(int i=0; i<4; i++)
+        {
+            this.g_chart.get(i).add("NIL");
+        }
+    }
+    void addState(String value, int location)
+    {
+        int index = this.g_chart.get(location).size() - 1;
+        this.g_chart.get(location).set(index, value);
     }
 
     public void sortTime(List<Process> Queue)
@@ -83,6 +105,15 @@ public abstract class Schedule {
         }
     }
 
+    public void showChart()
+    {
+        System.out.println("#Time-----#CPU-----#R1-----#R2-----#R3");
+        for(int i=0; i< this.time_stamp.size(); i++)
+        {
+            System.out.printf("%s-----%s-----%s-----%s-----%s%n", this.time_stamp.get(i),
+            this.g_chart.get(0).get(i),this.g_chart.get(1).get(i),this.g_chart.get(2).get(i),this.g_chart.get(3).get(i));
+        }
+    }
 
     public abstract void startProcess();
 }
