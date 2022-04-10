@@ -75,5 +75,12 @@ public abstract class Schedule {
         System.out.println();
     }
 
+    public void setWaitReadyQueue()
+    {
+        for(Process p : this.readyQueue)
+        {
+            p.waitProcess();
+        }
+    }
     public abstract void startProcess();
 }

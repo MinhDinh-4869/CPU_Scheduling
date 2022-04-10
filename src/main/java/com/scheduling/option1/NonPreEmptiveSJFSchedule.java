@@ -2,8 +2,8 @@ package com.scheduling.option1;
 
 import java.util.List;
 
-public class NonPreEmptiveSchedule extends Schedule{
-    public NonPreEmptiveSchedule()
+public class NonPreEmptiveSJFSchedule extends Schedule{
+    public NonPreEmptiveSJFSchedule()
     {
         super();
     }
@@ -131,6 +131,8 @@ public class NonPreEmptiveSchedule extends Schedule{
                 this.running.run();
             }
         }
+
+        setWaitReadyQueue();
     }
 
 /*

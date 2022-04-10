@@ -7,6 +7,9 @@ public class Process {
     public int resource_id = 0;
     public boolean canJump = false;
 
+    int waiting_time = 0;
+    int get_out_time;
+
     private final Schedule schedule;
     public int in_time;
     private List<Integer> cpu_burst;
@@ -50,6 +53,20 @@ public class Process {
         this.cpu_burst.set(0, this.cpu_burst.get(0) - 1);
     }
 
+    public void waitProcess()
+    {
+        this.waiting_time++;
+    }
+
+    public void rollBackWaitTime()
+    {
+        this.waiting_time--;
+    }
+
+    public void showWaitTime()
+    {
+        System.out.println(this.name + " 's wait time : " + this.waiting_time);
+    }
     public void runResource()
     {
         System.out.println(this.name + " is using resource no. " + this.resource_id);

@@ -6,7 +6,7 @@ import java.util.List;
 public class Client {
     public static void main(String[] args)
     {
-        Schedule s = new NonPreEmptiveSchedule();
+        Schedule s = new NonPreEmptiveSJFSchedule();
 
         Process p1 = new Process(s, "process 1");
         Process p2 = new Process(s, "process 2");
@@ -43,5 +43,8 @@ public class Client {
         p3.setResourceBurst(p3_resource, 0);
 
         s.startProcess();
+        p1.showWaitTime();
+        p2.showWaitTime();
+        p3.showWaitTime();
     }
 }
