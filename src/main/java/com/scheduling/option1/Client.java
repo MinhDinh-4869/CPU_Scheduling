@@ -6,7 +6,7 @@ import java.util.List;
 public class Client {
     public static void main(String[] args)
     {
-        Schedule s = new NonPreEmptiveSJFSchedule();
+        Schedule s = new PreEmptiveSJFSchedule();
 
         Process p1 = new Process(s, "process 1");
         Process p2 = new Process(s, "process 2");

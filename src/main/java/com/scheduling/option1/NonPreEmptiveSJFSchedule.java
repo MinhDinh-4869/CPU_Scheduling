@@ -161,43 +161,22 @@ public class NonPreEmptiveSJFSchedule extends Schedule{
         }
     }
 */
-    void moveToReady(List<Process> resource)
-    {
-        if(resource.get(0).canJump)
-        {
-            this.readyQueue.add(resource.get(0));
-            resource.remove(0);
-        }
-        else
-        {
-            System.out.println(resource.get(0).name + " Exit System");
-            resource.remove(0);
-        }
-    }
+
     void scheduleResource()
     {
         for(List<Process> l : this.resourceQueue)
         {
             if(l.size() > 0) //there is process in resourceQueue
             {
-                //run
-                if(l.get(0).getResourceBurst() > 0)
-                {
-                    l.get(0).runResource();
-                    //after run, check the resource for being 0
-                    //if yes, move it to ready queue for the next second
-                    //The cpu scheduling phase does not need this because we set the resource scheduling to be the end
-                    //phase, it needs to prepare for the next loop
-                    if(l.get(0).getResourceBurst() == 0)
-                    {
-                        l.get(0).removeDoneResourceBurst();
-                        moveToReady(l);
-                    }
-                }
-                else if(l.get(0).getResourceBurst() == 0) //if the resource burst is out
+                l.get(0).runResource();
+                //after run, check the resource for being 0
+                //if yes, move it to ready queue for the next second
+                //The cpu scheduling phase does not need this because we set the resource scheduling to be the end
+                //phase, it needs to prepare for the next loop
+                if(l.get(0).getResourceBurst() == 0) //make sure no 0 burst in the resource
                 {
                     l.get(0).removeDoneResourceBurst();
-                    /*
+                    //moveToReady(l);
                     if(l.get(0).canJump)
                     {
                         this.readyQueue.add(l.get(0));
@@ -207,12 +186,6 @@ public class NonPreEmptiveSJFSchedule extends Schedule{
                     {
                         System.out.println(l.get(0).name + " Exit System");
                         l.remove(0);
-                    }
-                    */
-                    moveToReady(l);
-                    if(l.size() > 0)
-                    {
-                        l.get(0).runResource();
                     }
                 }
             }
