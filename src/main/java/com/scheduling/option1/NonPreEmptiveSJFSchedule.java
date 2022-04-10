@@ -14,14 +14,12 @@ public class NonPreEmptiveSJFSchedule extends Schedule{
     {
         while(true)
         {
-            //System.out.println("#Time = " + this.time);
-            //System.out.println("#Time-----#CPU-----#R1-----#R2-----#R3");
-            //System.out.print(this.time + "\t");
+            System.out.println("#Time = " + this.time);
             addWaitToReady();
+
             showReadyQueue();
 
             initState();
-
             scheduleCPU();
             scheduleResource();
             if(this.running == null && this.readyQueue.size() == 0 &&  resourceIsOut())

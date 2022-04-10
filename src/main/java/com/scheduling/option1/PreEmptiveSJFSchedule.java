@@ -18,6 +18,8 @@ public class PreEmptiveSJFSchedule extends Schedule{
             sortBurst(this.readyQueue);
 
             showReadyQueue();
+
+            initState();//for drawing chart
             scheduleCPU();
             scheduleResource();
 
