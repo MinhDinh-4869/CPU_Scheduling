@@ -58,33 +58,6 @@ public class PreEmptiveSJFSchedule extends Schedule{
         setWaitReadyQueue();
     }
 
-    /*
-    void scheduleResource()
-    {
-        for(List<Process> l : this.resourceQueue)
-        {
-            if(l.size() > 0) {
-                if (l.get(0).getResourceBurst() == 0) {
-                    l.get(0).removeDoneResourceBurst();//remove the done resource burst from the process resource queue
-                    if (l.get(0).canJump) {
-                        this.readyQueue.add(l.get(0));
-                        l.remove(0);
-                    } else {
-                        System.out.println(l.get(0).name + " exit System!");
-                        l.remove(0);
-                    }
-
-                    if (l.size() > 0) {
-                        l.get(0).runResource();
-                    }
-                } else {
-                    l.get(0).runResource();
-                }
-            }
-        }
-    }
-*/
-
     void scheduleResource()
     {
         for(List<Process> l : this.resourceQueue)
@@ -112,18 +85,6 @@ public class PreEmptiveSJFSchedule extends Schedule{
                     }
                 }
             }
-        }
-    }
-
-    void addWaitToReady()
-    {
-        sortTime(this.waitQueue);
-        while(this.waitQueue.size() > 0 && this.waitQueue.get(0).in_time == this.time)
-        {
-            String name = this.waitQueue.get(0).name;
-            this.readyQueue.add(this.waitQueue.get(0));
-            this.waitQueue.remove(0);
-            System.out.println(name + " is added to Ready Queue!");
         }
     }
 }

@@ -38,6 +38,7 @@ public abstract class Schedule {
             this.g_chart.get(i).add("NIL");
         }
     }
+
     void addState(String value, int location)
     {
         int index = this.g_chart.get(location).size() - 1;
@@ -115,5 +116,18 @@ public abstract class Schedule {
         }
     }
 
+    void addWaitToReady()
+    {
+        sortTime(this.waitQueue);
+        while(this.waitQueue.size() > 0 && this.waitQueue.get(0).in_time == this.time)
+        {
+            String name = this.waitQueue.get(0).name;
+            this.readyQueue.add(this.waitQueue.get(0));
+            this.waitQueue.remove(0);
+            System.out.println(name + " is added to Ready Queue!");
+        }
+    }
     public abstract void startProcess();
+    abstract void scheduleCPU();
+    abstract void scheduleResource();
 }

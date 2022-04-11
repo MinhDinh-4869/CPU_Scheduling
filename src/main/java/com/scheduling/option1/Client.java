@@ -6,7 +6,7 @@ import java.util.List;
 public class Client {
     public static void main(String[] args)
     {
-        Schedule s = new NonPreEmptiveSJFSchedule();
+        Schedule s = new FIFOSchedule();
 
         Process p1 = new Process(s, "process 1");
         Process p2 = new Process(s, "process 2");
@@ -32,13 +32,13 @@ public class Client {
 
         p1_resource.add(2);
         p2_resource.add(2);
-        p3_resource.add(1);
+        p3_resource.add(6);
 
         p1.setCpuBurst(p1_burst);
         p2.setCpuBurst(p2_burst);
         p3.setCpuBurst(p3_burst);
 
-        p1.setResourceBurst(p1_resource, 0);
+        p1.setResourceBurst(p1_resource, 1);
         p2.setResourceBurst(p2_resource, 1);
         p3.setResourceBurst(p3_resource, 0);
 

@@ -43,10 +43,12 @@ public class Process {
     {
         return this.cpu_burst.get(0);
     }
+
     public int getResourceBurst()
     {
         return this.resource_burst.get(0);
     }
+
     public void run()
     {
         System.out.println(this.name + " is running...");
@@ -69,6 +71,7 @@ public class Process {
     {
         System.out.println(this.name + " 's wait time : " + this.waiting_time);
     }
+
     public void runResource()
     {
         System.out.println(this.name + " is using resource no. " + this.resource_id);

@@ -2,77 +2,64 @@ package com.scheduling.option1;
 
 import java.util.List;
 
-public class NonPreEmptiveSJFSchedule extends Schedule{
-    public NonPreEmptiveSJFSchedule()
+public class FIFOSchedule extends Schedule{
+    public FIFOSchedule()
     {
         super();
     }
 
-    private Process running = null;
-
     public void startProcess()
     {
-        while(true)
-        {
-            System.out.println("#Time = " + this.time);
+        while(true) {
             addWaitToReady();
 
             showReadyQueue();
 
             initState();
+
             scheduleCPU();
             scheduleResource();
-            if(this.running == null && this.readyQueue.size() == 0 &&  resourceIsOut())
+
+            if (this.readyQueue.size() == 0 && resourceIsOut()) {
                 break;
-            this.time++;
-            System.out.println("-------------------------");
+            }
+            this.time ++;
         }
     }
 
     void scheduleCPU()
     {
-        //check for running
-        if(this.running == null)
+        if(this.readyQueue.size() > 0)
         {
-            //look for readyQueue
-            if(this.readyQueue.size() > 0)
+            //check for the first process in the readyQueue
+            Process running = this.readyQueue.get(0);
+            if(running.getBurst() == 0)
             {
-                //assign the running
-                sortBurst(this.readyQueue);
-                this.running = this.readyQueue.get(0);
-                this.readyQueue.remove(0);
-                this.running.run();
-            }
-        }
-
-        //assume that the current running is not null
-        //check for burst value
-        else {//this.running != null
-            if (this.running.getBurst() == 0) {//process runs out of burst
-                this.running.removeDoneBurst();
-                if (this.running.canJump) {
-                    this.resourceQueue.get(this.running.resource_id).add(this.running);
-                } else {
-                    System.out.println(this.running.name + " Exit System!");
+                running.removeDoneBurst();
+                if(running.canJump)//has resource
+                {
+                    this.resourceQueue.get(running.resource_id).add(running);
+                    this.readyQueue.remove(0);
+                }
+                else{
+                    //no more resource
+                    System.out.println(running.name + " Exit System!");
+                    this.readyQueue.remove(0);
                 }
 
-                this.running = null; //set the running to be null
-
-                //check for remaining process in the readyQueue
                 if(this.readyQueue.size() > 0)
                 {
-                    sortBurst(this.readyQueue);
-                    this.running = this.readyQueue.get(0);
-                    this.readyQueue.remove(0);
-                    this.running.run();
+                    running = this.readyQueue.get(0);
+                    running.run();
+                    running.rollBackWaitTime();
                 }
             }
             else
             {
-                this.running.run();
+                running.run();
+                running.rollBackWaitTime();
             }
         }
-
         setWaitReadyQueue();
     }
 

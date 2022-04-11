@@ -57,3 +57,97 @@
             }
         }
     }
+
+
+
+/*Schedule CPU for PreEmptiveSJF*/
+/*
+    void scheduleCPU()
+    {
+        if(this.readyQueue.get(0).getBurst() == 0)
+        {
+            this.readyQueue.get(0).removeDoneBurst();
+            if(this.readyQueue.get(0).canJump){
+                this.resourceQueue.get(readyQueue.get(0).resource_id).add(readyQueue.get(0));
+                this.readyQueue.remove(0);
+            }
+            else{
+                System.out.println(this.readyQueue.get(0).name + " exit System!");
+                this.readyQueue.remove(0);}
+
+            if(this.readyQueue.size() > 0)
+            {
+                this.readyQueue.get(0).run();
+            }
+        }
+        else
+        {
+            //let the first process in the queue runs
+            this.readyQueue.get(0).run();
+        }
+    }
+ */
+
+    /*
+    void scheduleCPU()
+    {
+        //assign the first
+        if (this.running == null && this.readyQueue.size() > 0)
+        {
+            sortBurst(this.readyQueue);
+            this.running = this.readyQueue.get(0);
+            this.readyQueue.remove(0);
+            this.running.run();
+        }
+        else if (this.running != null) {
+            if (this.running.getBurst() == 0) {
+                this.running.removeDoneBurst();
+                if (this.running.canJump) {
+                    this.resourceQueue.get(this.running.resource_id).add(this.running);
+                } else {
+                    System.out.println(this.running.name + " exit System!");
+                }
+                this.running = null;
+
+                if (this.readyQueue.size() > 0) {
+                    sortBurst(this.readyQueue);
+                    this.running = this.readyQueue.get(0);
+                    this.readyQueue.remove(0);
+                    this.running.run();
+                }
+            } else {
+                this.running.run();
+            }
+        }
+    }
+*/
+
+
+
+//old code that is not pass the run out burst resource to ready queue
+/*
+    void scheduleResource()
+    {
+        for(List<Process> l : this.resourceQueue)
+        {
+            if(l.size() > 0) {
+                if (l.get(0).getResourceBurst() == 0) {
+                    l.get(0).removeDoneResourceBurst();//remove the done resource burst from the process resource queue
+                    if (l.get(0).canJump) {
+                        this.readyQueue.add(l.get(0));
+                        l.remove(0);
+                    } else {
+                        System.out.println(l.get(0).name + " exit System!");
+                        l.remove(0);
+                    }
+
+                    if (l.size() > 0) {
+                        l.get(0).runResource();
+                    }
+                } else {
+                    l.get(0).runResource();
+                }
+            }
+        }
+    }
+*/
