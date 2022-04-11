@@ -11,6 +11,7 @@ public abstract class Schedule implements ScheduleInterface {
     protected List<Process> list_of_processes = new ArrayList<>();
     //set the number of resources to be 3
     protected final int resource_num = 3;
+
     protected List<List<Process>> resourceQueue = new ArrayList<>(resource_num);
     protected List<Process> waitQueue = new ArrayList<>();
     protected List<List<String>> g_chart = new ArrayList<>(resource_num + 1);
