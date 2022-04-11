@@ -125,7 +125,7 @@ public abstract class Schedule implements ScheduleInterface {
 
     public void showChart()
     {
-        System.out.println("===================GANNT CHART====================");
+        System.out.println("===================GANT CHART====================");
         System.out.println("#Time ----  #CPU -----  #R1  -----  #R2 -----  #R3");
         for(int i=0; i< this.time_stamp.size(); i++)
         {
