@@ -7,6 +7,7 @@ public class Client {
     public static void main(String[] args)
     {
         ScheduleInterface s = new PreEmptiveSJFSchedule();
+        //ScheduleInterface s = new RoundRobinSchedule(3);
 
         Process p1 = new Process(s, "P1");
         Process p2 = new Process(s, "P2");
