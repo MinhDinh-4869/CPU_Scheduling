@@ -6,11 +6,11 @@ import java.util.List;
 public class Client {
     public static void main(String[] args)
     {
-        Schedule s = new FIFOSchedule();
+        ScheduleInterface s = new PreEmptiveSJFSchedule();
 
-        Process p1 = new Process(s, "process 1");
-        Process p2 = new Process(s, "process 2");
-        Process p3 = new Process(s, "process 3");
+        Process p1 = new Process(s, "P1");
+        Process p2 = new Process(s, "P2");
+        Process p3 = new Process(s, "P3");
 
         p1.in_time = 3;
         p2.in_time = 4;
@@ -30,9 +30,9 @@ public class Client {
         p3_burst.add(7);
 
 
-        p1_resource.add(2);
-        p2_resource.add(2);
-        p3_resource.add(6);
+        p1_resource.add(3);
+        p2_resource.add(5);
+        p3_resource.add(2);
 
         p1.setCpuBurst(p1_burst);
         p2.setCpuBurst(p2_burst);
@@ -43,9 +43,10 @@ public class Client {
         p3.setResourceBurst(p3_resource, 0);
 
         s.startProcess();
-        p1.showWaitTime();
-        p2.showWaitTime();
-        p3.showWaitTime();
+
+        System.out.println("========================RESULT========================");
+        s.showWaitTime();
+        s.showTurnAroundTime();
 
         s.showChart();
     }

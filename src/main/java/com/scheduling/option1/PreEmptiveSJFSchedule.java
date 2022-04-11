@@ -2,7 +2,7 @@ package com.scheduling.option1;
 
 import java.util.List;
 
-public class PreEmptiveSJFSchedule extends Schedule{
+public class PreEmptiveSJFSchedule extends Schedule implements ScheduleInterface{
     public PreEmptiveSJFSchedule()
     {
         super();
@@ -42,6 +42,7 @@ public class PreEmptiveSJFSchedule extends Schedule{
                     this.readyQueue.remove(0);
                 } else {
                     System.out.println(this.readyQueue.get(0).name + " exit System!");
+                    this.readyQueue.get(0).setOutTime(this.time);
                     this.readyQueue.remove(0);
                 }
 
@@ -81,6 +82,7 @@ public class PreEmptiveSJFSchedule extends Schedule{
                     else
                     {
                         System.out.println(l.get(0).name + " Exit System");
+                        l.get(0).setOutTime(this.time);
                         l.remove(0);
                     }
                 }

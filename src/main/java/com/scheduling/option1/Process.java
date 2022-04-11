@@ -10,12 +10,12 @@ public class Process {
     int waiting_time = 0;
     int get_out_time;
 
-    private final Schedule schedule;
+    private final ScheduleInterface schedule;
     public int in_time;
     private List<Integer> cpu_burst;
     private List<Integer> resource_burst;
 
-    public Process(Schedule schedule, String name)
+    public Process(ScheduleInterface schedule, String name)
     {
         this.name = name;
         this.schedule = schedule;
@@ -53,7 +53,6 @@ public class Process {
     {
         System.out.println(this.name + " is running...");
         this.schedule.addState(this.name, 0);
-        //System.out.print("/t" + this.name);
         this.cpu_burst.set(0, this.cpu_burst.get(0) - 1);
     }
 
@@ -89,5 +88,20 @@ public class Process {
     {
         this.resource_burst.remove(0);
         this.canJump = (this.cpu_burst.size() > 0);
+    }
+
+    public void setOutTime(int get_out_time)
+    {
+        this.get_out_time = get_out_time;
+    }
+
+    public int getOutTime()
+    {
+        return this.get_out_time;
+    }
+
+    public int getTurnAroundTime()
+    {
+        return this.get_out_time - this.in_time;
     }
 }

@@ -2,7 +2,7 @@ package com.scheduling.option1;
 
 import java.util.List;
 
-public class FIFOSchedule extends Schedule{
+public class FIFOSchedule extends Schedule implements ScheduleInterface{
     public FIFOSchedule()
     {
         super();
@@ -44,6 +44,7 @@ public class FIFOSchedule extends Schedule{
                 else{
                     //no more resource
                     System.out.println(running.name + " Exit System!");
+                    this.readyQueue.get(0).setOutTime(this.time);
                     this.readyQueue.remove(0);
                 }
 
@@ -86,6 +87,7 @@ public class FIFOSchedule extends Schedule{
                     else
                     {
                         System.out.println(l.get(0).name + " Exit System");
+                        l.get(0).setOutTime(this.time);
                         l.remove(0);
                     }
                 }
