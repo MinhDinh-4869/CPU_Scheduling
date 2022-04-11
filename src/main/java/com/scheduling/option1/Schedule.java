@@ -7,6 +7,7 @@ import java.util.List;
 
 public abstract class Schedule implements ScheduleInterface {
     public int time = 0;
+
     protected List<Process> readyQueue = new ArrayList<>();
     protected List<Process> list_of_processes = new ArrayList<>();
     //set the number of resources to be 3
