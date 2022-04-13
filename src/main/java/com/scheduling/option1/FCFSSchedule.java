@@ -2,8 +2,8 @@ package com.scheduling.option1;
 
 import java.util.List;
 
-public class FIFOSchedule extends Schedule implements ScheduleInterface{
-    public FIFOSchedule()
+public class FCFSSchedule extends Schedule implements ScheduleInterface{
+    public FCFSSchedule()
     {
         super();
     }
