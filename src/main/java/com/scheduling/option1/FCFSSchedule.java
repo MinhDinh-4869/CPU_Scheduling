@@ -38,7 +38,8 @@ public class FCFSSchedule extends Schedule implements ScheduleInterface{
                 running.removeDoneBurst();
                 if(running.canJump)//has resource
                 {
-                    this.resourceQueue.get(running.resource_id).add(running);
+                    //this.resourceQueue.get(running.resource_id).add(running);
+                    this.resourceQueue.get(running.resource_id.get(0)).add(running);//for multiple resource assigment
                     this.readyQueue.remove(0);
                 }
                 else{

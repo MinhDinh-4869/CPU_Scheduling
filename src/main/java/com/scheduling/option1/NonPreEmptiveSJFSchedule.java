@@ -51,7 +51,9 @@ public class NonPreEmptiveSJFSchedule extends Schedule implements ScheduleInterf
             if (this.running.getBurst() == 0) {//process runs out of burst
                 this.running.removeDoneBurst();
                 if (this.running.canJump) {
-                    this.resourceQueue.get(this.running.resource_id).add(this.running);
+                    //move to the appropriate resource
+                    //this.resourceQueue.get(this.running.resource_id).add(this.running);
+                     this.resourceQueue.get(this.running.resource_id.get(0)).add(this.running);
                 } else {
                     System.out.println(this.running.name + " Exit System!");
                     this.running.setOutTime(this.time);

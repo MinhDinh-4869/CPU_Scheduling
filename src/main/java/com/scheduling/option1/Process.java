@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Process {
     public String name;
-    public int resource_id = 0;
+    //public int resource_id = 0;
     public boolean canJump = false;
 
     int waiting_time = 0;
@@ -14,6 +14,7 @@ public class Process {
     public int in_time;
     private List<Integer> cpu_burst;
     private List<Integer> resource_burst;
+    public List<Integer> resource_id;
 
     public Process(ScheduleInterface schedule, String name)
     {
@@ -27,7 +28,7 @@ public class Process {
         this.cpu_burst = cpu_burst;
     }
 
-    public void setResourceBurst(List<Integer> resource_burst, int resource_id)
+    public void setResourceBurst(List<Integer> resource_burst, List<Integer> resource_id)
     {
         //set the resource properties for Process and add it to the schedule
         this.resource_burst = resource_burst;
@@ -74,7 +75,7 @@ public class Process {
     public void runResource()
     {
         System.out.println(this.name + " is using resource no. " + this.resource_id);
-        this.schedule.addState(this.name, 1 + this.resource_id);
+        this.schedule.addState(this.name, 1 + this.resource_id.get(0));
         this.resource_burst.set(0, this.resource_burst.get(0) - 1);
     }
 
@@ -87,6 +88,7 @@ public class Process {
     public void removeDoneResourceBurst()
     {
         this.resource_burst.remove(0);
+        this.resource_id.remove(0);//remove the corresponding resource id
         this.canJump = (this.cpu_burst.size() > 0);
     }
 

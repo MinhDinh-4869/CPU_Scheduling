@@ -66,7 +66,9 @@ public class RoundRobinSchedule extends Schedule implements ScheduleInterface{
                     this.running.removeDoneBurst();
                     if(this.running.canJump)
                     {
-                        this.resourceQueue.get(this.running.resource_id).add(this.running);
+                        // move to the appropriate resource
+                        //this.resourceQueue.get(this.running.resource_id).add(this.running);
+                        this.resourceQueue.get(this.running.resource_id.get(0)).add(this.running);
                     }
                     else
                     {

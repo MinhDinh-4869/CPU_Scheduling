@@ -38,7 +38,9 @@ public class PreEmptiveSJFSchedule extends Schedule implements ScheduleInterface
             if (this.readyQueue.get(0).getBurst() == 0) {
                 this.readyQueue.get(0).removeDoneBurst();
                 if (this.readyQueue.get(0).canJump) {
-                    this.resourceQueue.get(readyQueue.get(0).resource_id).add(readyQueue.get(0));
+                    //move to the appropriate resource
+                    //this.resourceQueue.get(readyQueue.get(0).resource_id).add(readyQueue.get(0));
+                    this.resourceQueue.get(readyQueue.get(0).resource_id.get(0)).add(readyQueue.get(0));
                     this.readyQueue.remove(0);
                 } else {
                     System.out.println(this.readyQueue.get(0).name + " exit System!");
