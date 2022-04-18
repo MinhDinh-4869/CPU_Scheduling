@@ -10,11 +10,22 @@ public class Process {
     int waiting_time = 0;
     int get_out_time;
 
-    private final ScheduleInterface schedule;
+    private ScheduleInterface schedule;
     public int in_time;
     private List<Integer> cpu_burst;
     private List<Integer> resource_burst;
     public List<Integer> resource_id;
+
+    public Process(String name)
+    {
+        this.name = name;
+    }
+
+    public void setSchedule(ScheduleInterface schedule)
+    {
+        this.schedule = schedule;
+        schedule.add(this);
+    }
 
     public Process(ScheduleInterface schedule, String name)
     {
