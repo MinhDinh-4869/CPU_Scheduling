@@ -39,7 +39,7 @@ public class FCFSSchedule extends Schedule implements ScheduleInterface{
                 if(running.canJump)//has resource
                 {
                     //this.resourceQueue.get(running.resource_id).add(running);
-                    this.resourceQueue.get(running.resource_id.get(0)).add(running);//for multiple resource assigment
+                    this.resourceQueue.get(running.resource_id.get(0)).add(running);//for multiple resource assignment
                     this.readyQueue.remove(0);
                 }
                 else{

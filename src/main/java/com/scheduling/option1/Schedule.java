@@ -1,8 +1,6 @@
 package com.scheduling.option1;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class Schedule implements ScheduleInterface {
@@ -15,7 +13,7 @@ public abstract class Schedule implements ScheduleInterface {
 
     protected List<List<Process>> resourceQueue = new ArrayList<>(resource_num);
     protected List<Process> waitQueue = new ArrayList<>();
-    protected List<List<String>> g_chart = new ArrayList<>(resource_num + 1);
+    protected List<List<String>> g_chart = new ArrayList<>(resource_num + 1);//1 for cpu
     protected List<Integer> time_stamp = new ArrayList<>();
 
     public Schedule()
@@ -40,7 +38,7 @@ public abstract class Schedule implements ScheduleInterface {
     this.time_stamp.add(this.time);
     for(int i=0; i<4; i++)
     {
-        this.g_chart.get(i).add("|||");
+        this.g_chart.get(i).add("__");
     }
     }
 
@@ -164,4 +162,9 @@ public abstract class Schedule implements ScheduleInterface {
     public abstract void startProcess();
     abstract void scheduleCPU();
     abstract void scheduleResource();
+
+    public List<List<String>> getChart()
+    {
+        return this.g_chart;
+    }
 }

@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Client_01 extends JFrame {
     private JTextField numProc;
@@ -9,7 +7,6 @@ public class Client_01 extends JFrame {
     private JButton confirmButton;
     private JButton exitButton;
     private JPanel mainPanel;
-    private JComboBox schedules;
 
     public Client_01()
     {
@@ -21,29 +18,21 @@ public class Client_01 extends JFrame {
     }
     void configActionListener()
     {
-        this.confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int numProcess = Integer.parseInt(numProc.getText());
-                int maxNumCPU = Integer.parseInt(maxCPU.getText());
-                int maxNumResource = Integer.parseInt(maxResource.getText());
-                if((maxNumCPU == maxNumResource) || ((maxNumCPU - 1) == maxNumResource))
-                {
-                    new GetDataDialog(maxNumCPU + maxNumResource + 2, numProcess);
-                }
-                else
-                {
-                    System.exit(1);
-                }
+        this.confirmButton.addActionListener(e -> {
+            int numProcess = Integer.parseInt(numProc.getText());
+            int maxNumCPU = Integer.parseInt(maxCPU.getText());
+            int maxNumResource = Integer.parseInt(maxResource.getText());
+            if((maxNumCPU == maxNumResource) || ((maxNumCPU - 1) == maxNumResource))
+            {
+                new GetDataDialog(maxNumCPU + maxNumResource + 2, numProcess);
             }
-        });
-
-        this.exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            else
+            {
                 System.exit(1);
             }
         });
+
+        this.exitButton.addActionListener(e -> System.exit(1));
     }
 
     public static void main(String[] args)

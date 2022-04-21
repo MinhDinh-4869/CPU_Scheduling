@@ -1,5 +1,7 @@
 package com.scheduling.option1;
 
+import java.util.List;
+
 //Interface to put the  methods that the client needs
 public interface ScheduleInterface {
     void startProcess();
@@ -8,4 +10,5 @@ public interface ScheduleInterface {
     void showTurnAroundTime();
     void add(Process p);
     void addState(String name, int i);
+    public List<List<String>> getChart();
 }

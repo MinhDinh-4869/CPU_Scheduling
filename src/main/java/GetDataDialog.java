@@ -1,17 +1,14 @@
+import com.scheduling.option1.Process;
+import com.scheduling.option1.*;
+import com.scheduling.option1.drawAPI.drawGanntChartAPI;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.scheduling.option1.*;
-import com.scheduling.option1.Process;
-
 public class GetDataDialog extends JDialog {
-    int height;
-    int width;
     JPanel mainPanel = new JPanel();
     JPanel confirmPanel;
     JButton confirmButton;
@@ -28,7 +25,7 @@ public class GetDataDialog extends JDialog {
         this.setSize(500,500);
         this.setLayout(new GridLayout(4,1));
 
-        initSchedule(3);
+        initSchedule();
 
         infoTable = initTable(width,height);
         mainPanel.setLayout(new GridLayout(height + 1, 2));
@@ -48,6 +45,7 @@ public class GetDataDialog extends JDialog {
         this.add(mainPanel, BorderLayout.CENTER);
 
         selectScheduleBox = new JComboBox<>(options);
+        selectScheduleBox.setSelectedIndex(-1);
         this.add(selectScheduleBox, BorderLayout.AFTER_LAST_LINE);
 
         confirmPanel = new JPanel();
@@ -59,26 +57,10 @@ public class GetDataDialog extends JDialog {
         confirmPanel.add(cancelButton);
 
 
-        confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onOk();
-            }
-        });
+        confirmButton.addActionListener(e -> onOk());
 
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        cancelButton.addActionListener(e -> onCancel());
 
-        selectScheduleBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onSelect();
-            }
-        });
         this.add(new JPanel().add(new JLabel("Please input the resource as follow: resource_id:burst. E.g: R1(3) = 1:3")));
 
         this.pack();
@@ -129,19 +111,17 @@ public class GetDataDialog extends JDialog {
         return identifier;
     }
 
-    void initSchedule(int q)
+    void initSchedule()
     {
         this.schedules = new ArrayList<>();
         this.schedules.add(new NonPreEmptiveSJFSchedule());
         this.schedules.add(new PreEmptiveSJFSchedule());
-        this.schedules.add(new RoundRobinSchedule(q));
+        this.schedules.add(new RoundRobinSchedule(3));
         this.schedules.add(new FCFSSchedule());
     }
     void onOk()
     {
-        //
-        //List<Process> list_of_processes = new ArrayList<>();
-        //ScheduleInterface s = new NonPreEmptiveSJFSchedule();
+        schedule = this.schedules.get(this.selectScheduleBox.getSelectedIndex());
 
         int p_count = 0;
         for(List<JTextField> process : infoTable)
@@ -178,18 +158,14 @@ public class GetDataDialog extends JDialog {
         schedule.startProcess();
         schedule.showTurnAroundTime();
         schedule.showWaitTime();
-        schedule.showChart();
+        //schedule.showChart();
+        drawGanntChartAPI drawer = new drawGanntChartAPI();
+        drawer.draw(schedule.getChart(), selectScheduleBox.getItemAt(selectScheduleBox.getSelectedIndex()));
         //dispose();
     }
 
     void onCancel()
     {
         dispose();
-    }
-
-    void onSelect()
-    {
-        int idx = selectScheduleBox.getSelectedIndex();
-        this.schedule = this.schedules.get(idx);
     }
 }
