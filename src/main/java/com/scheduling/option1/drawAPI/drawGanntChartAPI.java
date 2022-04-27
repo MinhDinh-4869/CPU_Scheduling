@@ -1,3 +1,8 @@
+/* This code is made by
+ * Dinh Cong Minh
+ * 16047
+ * CSE2019
+ */
 package com.scheduling.option1.drawAPI;
 
 import javax.swing.*;

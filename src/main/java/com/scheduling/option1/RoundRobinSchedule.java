@@ -1,3 +1,8 @@
+/* This code is made by
+ * Dinh Cong Minh
+ * 16047
+ * CSE2019
+ */
 package com.scheduling.option1;
 
 import java.util.List;
@@ -7,9 +12,9 @@ public class RoundRobinSchedule extends Schedule implements ScheduleInterface{
     private int running_counter =0;
     private final int q;
 
-    public RoundRobinSchedule(int q)
+    public RoundRobinSchedule(int resource_num, int q)
     {
-        super();
+        super(resource_num);
         this.q = q;
     }
 
@@ -73,7 +78,7 @@ public class RoundRobinSchedule extends Schedule implements ScheduleInterface{
                     else
                     {
                         System.out.println(this.running.name + " Exit System!");
-                        this.running.setOutTime(this.time);
+                        this.running.setOutTime(this.time - 1);
                     }
 
                     this.running = null;

@@ -1,11 +1,16 @@
+/* This code is made by
+ * Dinh Cong Minh
+ * 16047
+ * CSE2019
+ */
 package com.scheduling.option1;
 
 import java.util.List;
 
 public class NonPreEmptiveSJFSchedule extends Schedule implements ScheduleInterface{
-    public NonPreEmptiveSJFSchedule()
+    public NonPreEmptiveSJFSchedule(int resource_num)
     {
-        super();
+        super(resource_num);
     }
 
     private Process running = null;
@@ -56,7 +61,7 @@ public class NonPreEmptiveSJFSchedule extends Schedule implements ScheduleInterf
                      this.resourceQueue.get(this.running.resource_id.get(0)).add(this.running);
                 } else {
                     System.out.println(this.running.name + " Exit System!");
-                    this.running.setOutTime(this.time);
+                    this.running.setOutTime(this.time - 1);
                 }
 
                 this.running = null; //set the running to be null

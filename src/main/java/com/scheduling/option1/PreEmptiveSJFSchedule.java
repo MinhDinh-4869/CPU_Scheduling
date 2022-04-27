@@ -1,11 +1,16 @@
+/* This code is made by
+ * Dinh Cong Minh
+ * 16047
+ * CSE2019
+ */
 package com.scheduling.option1;
 
 import java.util.List;
 
 public class PreEmptiveSJFSchedule extends Schedule implements ScheduleInterface{
-    public PreEmptiveSJFSchedule()
+    public PreEmptiveSJFSchedule(int resource_num)
     {
-        super();
+        super(resource_num);
     }
 
 
@@ -44,7 +49,7 @@ public class PreEmptiveSJFSchedule extends Schedule implements ScheduleInterface
                     this.readyQueue.remove(0);
                 } else {
                     System.out.println(this.readyQueue.get(0).name + " exit System!");
-                    this.readyQueue.get(0).setOutTime(this.time);
+                    this.readyQueue.get(0).setOutTime(this.time - 1);
                     this.readyQueue.remove(0);
                 }
 

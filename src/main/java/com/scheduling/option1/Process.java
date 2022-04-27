@@ -1,17 +1,22 @@
+/* This code is made by
+ * Dinh Cong Minh
+ * 16047
+ * CSE2019
+ */
 package com.scheduling.option1;
 
 import java.util.List;
 
 public class Process {
-    public String name;
+    String name;
     //public int resource_id = 0;
-    public boolean canJump = false;
-
+    boolean canJump = false;
     int waiting_time = 0;
-    int get_out_time;
+    public int in_time;
+    public int in_system_time;
+    public int get_out_time;
 
     private ScheduleInterface schedule;
-    public int in_time;
     private List<Integer> cpu_burst;
     private List<Integer> resource_burst;
     public List<Integer> resource_id;
@@ -46,11 +51,6 @@ public class Process {
         this.resource_id = resource_id;
     }
 
-    public void setInTime(int in_time)
-    {
-        this.in_time = in_time;
-    }
-
     public int getBurst()
     {
         return this.cpu_burst.get(0);
@@ -78,11 +78,6 @@ public class Process {
         this.waiting_time--;
     }
 
-    public void showWaitTime()
-    {
-        System.out.println(this.name + " 's wait time : " + this.waiting_time);
-    }
-
     public void runResource()
     {
         System.out.println(this.name + " is using resource no. " + this.resource_id);
@@ -108,13 +103,8 @@ public class Process {
         this.get_out_time = get_out_time;
     }
 
-    public int getOutTime()
-    {
-        return this.get_out_time;
-    }
-
     public int getTurnAroundTime()
     {
-        return this.get_out_time - this.in_time;
+        return this.get_out_time - this.in_system_time + 1;
     }
 }

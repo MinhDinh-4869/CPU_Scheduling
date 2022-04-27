@@ -1,6 +1,12 @@
+/* This code is made by
+ * Dinh Cong Minh
+ * 16047
+ * CSE2019
+ */
 import com.scheduling.option1.Process;
 import com.scheduling.option1.*;
 import com.scheduling.option1.drawAPI.drawGanntChartAPI;
+import com.scheduling.option1.drawAPI.drawTimeAPI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,13 +25,13 @@ public class GetDataDialog extends JDialog {
     JComboBox<String> selectScheduleBox;
     ScheduleInterface schedule;
     //JFrame parent;
-    public GetDataDialog(int width, int height){
+    public GetDataDialog(int width, int height, int resource_num){
         //this.parent = parent;
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setSize(500,500);
         this.setLayout(new GridLayout(4,1));
 
-        initSchedule();
+        initSchedule(resource_num);
 
         infoTable = initTable(width,height);
         mainPanel.setLayout(new GridLayout(height + 1, 2));
@@ -57,7 +63,7 @@ public class GetDataDialog extends JDialog {
         confirmPanel.add(cancelButton);
 
 
-        confirmButton.addActionListener(e -> onOk());
+        confirmButton.addActionListener(e -> onOk(resource_num));
 
         cancelButton.addActionListener(e -> onCancel());
 
@@ -111,16 +117,17 @@ public class GetDataDialog extends JDialog {
         return identifier;
     }
 
-    void initSchedule()
+    void initSchedule(int resource_num)
     {
         this.schedules = new ArrayList<>();
-        this.schedules.add(new NonPreEmptiveSJFSchedule());
-        this.schedules.add(new PreEmptiveSJFSchedule());
-        this.schedules.add(new RoundRobinSchedule(3));
-        this.schedules.add(new FCFSSchedule());
+        this.schedules.add(new NonPreEmptiveSJFSchedule(resource_num));
+        this.schedules.add(new PreEmptiveSJFSchedule(resource_num));
+        this.schedules.add(new RoundRobinSchedule(resource_num,3));
+        this.schedules.add(new FCFSSchedule(resource_num));
     }
-    void onOk()
+    void onOk(int resource_num)
     {
+        initSchedule(resource_num);
         schedule = this.schedules.get(this.selectScheduleBox.getSelectedIndex());
 
         int p_count = 0;
@@ -131,6 +138,7 @@ public class GetDataDialog extends JDialog {
             List<Integer> resource = new ArrayList<>();
             List<Integer> resource_id = new ArrayList<>();
             int readyInTime = Integer.parseInt(process.get(1).getText());
+            int systemInTime = Integer.parseInt(process.get(0).getText());
             for(int i=2; i<process.size(); i++)
             {
                 if(i % 2 == 0 && !Objects.equals(process.get(i).getText(), ""))
@@ -142,23 +150,25 @@ public class GetDataDialog extends JDialog {
                 {
                     String data = process.get(i).getText();
                     //System.out.print(data);
-                    String[] splited_data = data.split(":");
-                    resource.add(Integer.parseInt(splited_data[1]));
-                    resource_id.add(Integer.parseInt(splited_data[0]) - 1);
+                    String[] split_data = data.split(":");
+                    resource.add(Integer.parseInt(split_data[1]));
+                    resource_id.add(Integer.parseInt(split_data[0]) - 1);
                 }
             }
-            Process p = new Process(String.format("P%d", p_count));
+            Process p = new Process(schedule,String.format("P%d", p_count));
             p.in_time = readyInTime;
+            p.in_system_time = systemInTime;
             p.setCpuBurst(cpu);
             p.setResourceBurst(resource, resource_id);
             //list_of_processes.add(p);
-            p.setSchedule(schedule);
         }
 
         schedule.startProcess();
-        schedule.showTurnAroundTime();
-        schedule.showWaitTime();
+        //schedule.showTurnAroundTime();
+        //System.out.println(schedule.showTurnAroundTime());
+        //System.out.println(schedule.showWaitTime());
         //schedule.showChart();
+        new drawTimeAPI(schedule);
         drawGanntChartAPI drawer = new drawGanntChartAPI();
         drawer.draw(schedule.getChart(), selectScheduleBox.getItemAt(selectScheduleBox.getSelectedIndex()));
         //dispose();

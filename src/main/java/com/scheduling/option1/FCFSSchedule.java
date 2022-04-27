@@ -1,11 +1,16 @@
+/* This code is made by
+ * Dinh Cong Minh
+ * 16047
+ * CSE2019
+ */
 package com.scheduling.option1;
 
 import java.util.List;
 
 public class FCFSSchedule extends Schedule implements ScheduleInterface{
-    public FCFSSchedule()
+    public FCFSSchedule(int resource_num)
     {
-        super();
+        super(resource_num);
     }
 
     public void startProcess()
@@ -45,7 +50,7 @@ public class FCFSSchedule extends Schedule implements ScheduleInterface{
                 else{
                     //no more resource
                     System.out.println(running.name + " Exit System!");
-                    this.readyQueue.get(0).setOutTime(this.time);
+                    this.readyQueue.get(0).setOutTime(this.time - 1);
                     this.readyQueue.remove(0);
                 }
 

@@ -1,3 +1,8 @@
+/* This code is made by
+ * Dinh Cong Minh
+ * 16047
+ * CSE2019
+ */
 import javax.swing.*;
 
 public class Client_01 extends JFrame {
@@ -7,6 +12,7 @@ public class Client_01 extends JFrame {
     private JButton confirmButton;
     private JButton exitButton;
     private JPanel mainPanel;
+    private JTextField resourceNumField;
 
     public Client_01()
     {
@@ -22,9 +28,10 @@ public class Client_01 extends JFrame {
             int numProcess = Integer.parseInt(numProc.getText());
             int maxNumCPU = Integer.parseInt(maxCPU.getText());
             int maxNumResource = Integer.parseInt(maxResource.getText());
+            int resource_num = Integer.parseInt(resourceNumField.getText());
             if((maxNumCPU == maxNumResource) || ((maxNumCPU - 1) == maxNumResource))
             {
-                new GetDataDialog(maxNumCPU + maxNumResource + 2, numProcess);
+                new GetDataDialog(maxNumCPU + maxNumResource + 2, numProcess, resource_num);
             }
             else
             {
@@ -37,6 +44,7 @@ public class Client_01 extends JFrame {
 
     public static void main(String[] args)
     {
+        new AuthorInfo();
         new Client_01();
     }
 }

@@ -1,5 +1,11 @@
+/* This code is made by
+ * Dinh Cong Minh
+ * 16047
+ * CSE2019
+ */
 package com.scheduling.option1;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,23 +15,26 @@ public abstract class Schedule implements ScheduleInterface {
     protected List<Process> readyQueue = new ArrayList<>();
     protected List<Process> list_of_processes = new ArrayList<>();
     //set the number of resources to be 3
-    protected final int resource_num = 3;
+    protected int resource_num;
 
-    protected List<List<Process>> resourceQueue = new ArrayList<>(resource_num);
+    protected List<List<Process>> resourceQueue;// = new ArrayList<>(resource_num);
     protected List<Process> waitQueue = new ArrayList<>();
-    protected List<List<String>> g_chart = new ArrayList<>(resource_num + 1);//1 for cpu
+    protected List<List<String>> g_chart;// = new ArrayList<>(resource_num + 1);//1 for cpu
     protected List<Integer> time_stamp = new ArrayList<>();
 
-    public Schedule()
+    public Schedule(int resource_num)
     {
-     for(int i= 0; i< resource_num + 1; i++)
-     {
-         if (i < resource_num){
-             this.resourceQueue.add(new ArrayList<>());
-         }
-         this.g_chart.add(new ArrayList<>());
-     }
-     }
+        this.resource_num = resource_num;
+        resourceQueue = new ArrayList<>(resource_num);
+        g_chart = new ArrayList<>(resource_num + 1);
+        for(int i= 0; i< resource_num + 1; i++)
+        {
+            if (i < resource_num){
+                this.resourceQueue.add(new ArrayList<>());
+            }
+            this.g_chart.add(new ArrayList<>());
+        }
+    }
 
     public void add(Process p)
     {
@@ -36,7 +45,7 @@ public abstract class Schedule implements ScheduleInterface {
     void initState()
     {
     this.time_stamp.add(this.time);
-    for(int i=0; i<4; i++)
+    for(int i=0; i<this.resource_num + 1; i++)
     {
         this.g_chart.get(i).add("__");
     }
@@ -135,7 +144,7 @@ public abstract class Schedule implements ScheduleInterface {
                     this.g_chart.get(3).get(i));
         }
     }
-
+/*
     public void showWaitTime()
     {
         int avg_time = 0;
@@ -147,7 +156,21 @@ public abstract class Schedule implements ScheduleInterface {
         System.out.printf("The average waiting time is: %.2f\n------------------------------------\n",
                 (double) avg_time / this.list_of_processes.size());
     }
-
+ */
+    public String showWaitTime()
+    {
+        StringBuilder result = new StringBuilder("<html>");
+        int avg_time = 0;
+        for(Process p : list_of_processes)
+        {
+            result.append(String.format("Waiting time of %s is: %d<br/>", p.name, p.waiting_time));
+            avg_time+= p.waiting_time;
+        }
+        result.append(String.format("<br/>The average waiting time is: %.2f<br/>>------------------------------------</html>",
+                (double) avg_time / this.list_of_processes.size()));
+        return result.toString();
+    }
+    /*
     public void showTurnAroundTime()
     {
         int avg_time = 0;
@@ -159,12 +182,30 @@ public abstract class Schedule implements ScheduleInterface {
         System.out.printf("The average turn around time is: %.2f\n------------------------------------\n" ,
                 (double)avg_time / this.list_of_processes.size());
     }
-    public abstract void startProcess();
-    abstract void scheduleCPU();
-    abstract void scheduleResource();
+     */
+
+    public String showTurnAroundTime()
+    {
+        StringBuilder result = new StringBuilder("<html>");
+        int avg_time = 0;
+        for(Process p : list_of_processes)
+        {
+            result.append(String.format("Turn around time of %s is: %d<br/>", p.name, p.getTurnAroundTime()));
+            avg_time+= p.getTurnAroundTime();
+        }
+        result.append(String.format("<br/>The average turn around time is: %.2f<br/>------------------------------------</html>",
+                (double) avg_time / this.list_of_processes.size()));
+        return result.toString();
+    }
 
     public List<List<String>> getChart()
     {
         return this.g_chart;
     }
+
+    public abstract void startProcess();
+    abstract void scheduleCPU();
+    abstract void scheduleResource();
+
+
 }
